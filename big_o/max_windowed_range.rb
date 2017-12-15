@@ -16,8 +16,6 @@ p naive_solution([1, 0, 2, 5, 4, 8], 3) == 5 # 0, 2, 5
 p naive_solution([1, 0, 2, 5, 4, 8], 4) == 6 # 2, 5, 4, 8
 p naive_solution([1, 3, 2, 5, 4, 8], 5) == 6 # 3, 2, 5, 4, 8
 
-
-
 class MyQueue
   def initialize
     @store = []
@@ -77,7 +75,6 @@ class StackQueue
   end
 
   def enqueue(el)
-    @store.push(el)
     if @stack1.empty?
       @stack1.push(el)
       until @stack2.empty?
@@ -97,13 +94,13 @@ class StackQueue
     if @stack1.empty?
       until @stack2.empty?
         @stack1.push(@stack2.pop)
-        return @stack1.pop
       end
+      return @stack1.pop
     else
       until @stack1.empty?
         @stack2.push(@stack1.pop)
-        return @stack2.pop
       end
+      return @stack2.pop
     end
   end
 
@@ -175,13 +172,13 @@ class MinMaxStackQueue
     if @stack1.empty?
       until @stack2.empty?
         @stack1.push(@stack2.pop)
-        return @stack1.pop
       end
+      return @stack1.pop
     else
       until @stack1.empty?
         @stack2.push(@stack1.pop)
-        return @stack2.pop
       end
+      return @stack2.pop
     end
   end
 
@@ -212,18 +209,17 @@ end
 
 def optimized_solution(arr, window)
   current_max_range = nil
-  minmax = MinMaxStackQueue.new
 
-  (window - 1).times { |el| minmax.enqueue(el) }
-
-  i = window - 1
-  while i <= (arr.length - window)
-    minmax.enqueue(arr[i])
+    i = window
+  while i < arr.length
+    minmax = MinMaxStackQueue.new
+    (window).times { |el| minmax.enqueue(arr[i - el]) }
 
     diff = minmax.max - minmax.min
     current_max_range = diff if current_max_range.nil? || diff > current_max_range
 
     minmax.dequeue
+    minmax.enqueue(arr[i])
     i += 1
   end
 
