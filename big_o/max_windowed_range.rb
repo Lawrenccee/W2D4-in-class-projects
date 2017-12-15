@@ -156,7 +156,6 @@ class MinMaxStackQueue
   end
 
   def enqueue(el)
-    @stack1.push(el)
     if @stack1.empty?
       @stack1.push(el)
       until @stack2.empty?
@@ -196,7 +195,7 @@ class MinMaxStackQueue
 
   def max
     if @stack1.max > @stack2.max
-      @stack1.max
+      return @stack1.max
     end
 
     @stack2.max
@@ -204,7 +203,7 @@ class MinMaxStackQueue
 
   def min
     if @stack1.min < @stack2.min
-      @stack1.min
+      return @stack1.min
     end
 
     @stack2.min
